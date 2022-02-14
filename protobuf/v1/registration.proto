@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+package v1.registration;
+
+// register a dataplane node with control-plane
+message RegisterRequest {
+  // id of the mayastor instance
+  string id = 1;
+  // grpc endpoint of the mayastor instance
+  string grpc_endpoint = 2;
+}
+
+// dergister a dataplane node with control-plane
+message DeregisterRequest {
+  // id of the mayastor instance
+  string id = 1;
+}
+
+message ProbeRequest {
+  // Intentionally empty.
+}
+
+message ProbeResponse {
+  bool ready = 1;
+}
+
+service Registration {
+  rpc Register (RegisterRequest) returns (google.protobuf.Empty) {}
+  rpc Deregister (DeregisterRequest) returns (google.protobuf.Empty) {}
+  rpc Probe (ProbeRequest) returns (ProbeResponse) {}
+}
